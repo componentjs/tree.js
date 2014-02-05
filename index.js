@@ -39,17 +39,22 @@ module.exports = function(path, fn){
         readdir(dir, function(err, pkgs){
           if (err) return done(err);
 
-          // ./<user>/<repo>/<versions>
           pkgs.forEach(function(pkg){
             tree[user][pkg] = tree[user][pkg] || {};
 
+            // ./<user>/<repo>/<versions>
             readdir(join(dir, pkg), function(err, versions){
               if (err) return done(err);
               var b = new Batch;
+              b.concurrency(8);
 
               versions.forEach(function(version){
                 b.push(function(done){
-                  read(join(dir, pkg, version, 'component.json'), 'utf8', function(err, json){
+
+                  // ./<user>/<repo>/<versions>/component.json
+                  var path = join(dir, pkg, version, 'component.json');
+
+                  read(path, 'utf8', function(err, json){
                     if (err) return done(err);
 
                     try {
