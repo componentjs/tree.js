@@ -1,0 +1,10 @@
+{
+  "name": "component-tree",
+  "description": "component tree",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": "component/tree.js",
+  "dependencies": {
+    "batch": "~0.5.0"
+  }
+}
